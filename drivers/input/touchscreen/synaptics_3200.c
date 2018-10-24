@@ -3334,11 +3334,15 @@ static irqreturn_t synaptics_irq_thread(int irq, void *ptr)
 			}
 		}
 		if (buf & get_address_base(ts, 0x1A, INTR_SOURCE)) {
+#ifndef CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
+			if (!ts->finger_count) {
+#else
 			if (s2w_switch == 0) {
 				if (!ts->finger_count)
 					synaptics_ts_button_func(ts);
 			} else {
-//				printk("[TP] Ignore VK interrupt due to 2d points did not leave\n");
+#endif
+				printk("[TP] Ignore VK interrupt due to 2d points did not leave\n");
 				synaptics_ts_button_func(ts);
 			}
 		}
