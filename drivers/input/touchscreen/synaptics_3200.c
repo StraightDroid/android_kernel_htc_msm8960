@@ -197,8 +197,8 @@ static void syn_handle_block_touch(struct synaptics_ts_data *ts, int enable)
 
 #ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_DT2WAKE
 
-#define S2W_TIMEOUT 35
-#define S2W_TIMEOUT2 70
+#define DT2W_TIMEOUT 35
+#define DT2W_TIMEOUT2 70
 #define DT2W_TIMEOUT_MAX 400
 
 #define WAKE_VIBRATE_LENGTH 60
@@ -239,7 +239,7 @@ void dt2wake_pwrtrigger(void)
 	pwrtrigger_time[1] = pwrtrigger_time[0];
 	pwrtrigger_time[0] = jiffies;
 
-	if ((pwrtrigger_time[0] - pwrtrigger_time[1]) < S2W_TIMEOUT2) {
+	if ((pwrtrigger_time[0] - pwrtrigger_time[1]) < DT2W_TIMEOUT2) {
 		return;
 	}
 
@@ -3561,7 +3561,7 @@ err_input_dev:
 	input_free_device(dt2wake_pwrdev);
 	dt2wake_pwrdev = NULL;
 err_alloc_dev:
-	pr_info("[TP] [S2W] %s done\n", __func__);
+	pr_info("[TP] [DT2W] %s done\n", __func__);
 #endif
 
 err_create_wq_failed:
